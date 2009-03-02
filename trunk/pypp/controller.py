@@ -109,7 +109,9 @@ class Controller(object):
         
         return file
 
-    def processed(self):
+    def _processed(self):
+        """ for debugging purpose
+        """
         for i in self._processed:
             yield i
         
