@@ -9,6 +9,7 @@ __version__ = "$Id$"
 
 __all__ = ['Loader']
 
+import os
 import imp
 import sys
 
@@ -23,7 +24,9 @@ class Loader(object):
         self.global_scope = global_scope
     
     def load_module(self, fullname):
-        print "Loader.load_module: fullname(%s) name(%s) path(%s)" % (fullname, self.name, self.path)
+        isfile = self.file is not None
+        
+        #print "Loader.load_module: file(%s) fullname(%s) name(%s) path(%s)" % (isfile, fullname, self.name, self.path)
         
         try:
             mod = imp.load_module(self.name, self.file, self.path, self.desc)
