@@ -40,11 +40,13 @@ if __name__ == "__main__":
     import os.path
     import jld.cmd_g2.base_ui
 
+    print jld.cmd_g2.BaseCmdException
+
     #for e in _controller.processed():
     #    print e
 
-    for m in sys.modules:
-        print "module: %s" % m 
+    #for m in sys.modules:
+    #    print "module: %s" % m 
 
     #for e in _importer.processed:
     #    print e
