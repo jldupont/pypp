@@ -84,25 +84,28 @@ class Importer(object):
         #print "**result: name(%s) pkg(%s) mod(%s) path(%s)\n" % result2
 
         if (_ispkg):
-            return self._handlePkg(origName, rpath)
+            return self._handlePkg(origName, rpath, file, desc)
         
         if (_ismod):
-            return self._handleMod(origName, rpath)
+            return self._handleMod(origName, rpath, rpath, file, desc)
         
         return None
         
-    def _handlePkg(self, name, path):
+    def _handlePkg(self, name, rpath, file, desc):
         """ Handles package loading
         
-            path: filesystem path to package where __init__ should be found
+            rpath: filesystem path to package where __init__ should be found
         """
-        mod_path = os.path.join(path,'__init__.py')
-        return self._handleMod(name, mod_path)
+        mod_path = os.path.join(rpath,'__init__.py')
+        return self._handleMod(name, rpath, mod_path, file, desc)
     
-    def _handleMod(self, name, path):
+    def _handleMod(self, name, rpath, path, file, desc):
         """ Handles module loading
         
             path: filesystem path to the module (i.e. mod-name.py)
         """
         #print "_handleMod: name(%s) path(%s)" % (name,path)
-        return self.callback_import_module(name, path)
+        frame = sys._getframe(1)
+        global_scope = frame.f_globals
+        
+        return self.callback_import_module(name, rpath, path, file, desc, global_scope)

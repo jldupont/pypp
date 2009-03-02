@@ -16,12 +16,13 @@ import sys
 class Controller(object):
     """
     """
-    __slots__ = ['_processed']
+    __slots__ = ['_processed', '_loader']
     
     def __init__(self):
+        self._loader = None
         self._processed = {}
     
-    def handle_import_module(self, name, path):
+    def handle_import_module(self, name, rpath, path, file, desc, global_scope):
         """
         """
         #paranoia
@@ -29,7 +30,13 @@ class Controller(object):
             return None
         
         self._processed[name] = path
-        print "handle_import_module: name(%s) path(%s)" % (name, path)
+        print "handle_import_module: name(%s) rpath(%s)" % (name, rpath)
+    
+        try:
+            return self._loader(name, file, rpath, desc, global_scope)
+        except ImportError:
+            pass #pass-through
+        
         return None
 
     def processed(self):

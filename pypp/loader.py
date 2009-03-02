@@ -15,36 +15,22 @@ import sys
 class Loader(object):
     """ Loads a .pypp file in place of the usual .py
     """
-    def __init__(self, name, file, pathname, desc, scope):
-        self.file = file
+    def __init__(self, name, file, path, desc, global_scope):
         self.name = name
-        self.pathname = pathname
+        self.file = file
+        self.path = path
         self.desc = desc
-        self.scope = scope
-
+        self.global_scope = global_scope
+    
     def load_module(self, fullname):
-        if fullname in __builtins__:
-            try:
-                mod = imp.load_module(self.name, self.file,
-                                      self.pathname, self.desc)
-            finally:
-                if self.file:
-                    self.file.close()
-            sys.modules[fullname] = mod
-        else:
+        print "Loader.load_module: fullname(%s) name(%s) path(%s)" % (fullname, self.name, self.path)
+        
+        try:
+            mod = imp.load_module(self.name, self.file, self.path, self.desc)
+        finally:
             if self.file:
                 self.file.close()
-            mod = makeImportedModule(self.name, self.pathname, self.desc,
-                                     self.scope)
-            sys.modules[fullname] = mod
+        sys.modules[fullname] = mod
+        
         return mod
     
-
-# ==============================================
-# ==============================================
-
-if __name__ == "__main__":
-    """ Tests
-    """
-    import doctest
-    doctest.testmod()
