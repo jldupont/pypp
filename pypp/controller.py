@@ -58,27 +58,56 @@ class Controller(object):
         path = file.name
         file.close()
         print "Controller.preprocessModule: name(%s)" % name
-        return self._preprocessFile(path)
+        return self._preprocessFile(name, path)
         
 
     def preprocessPackage(self, name, path):
         """
         """
         print "Controller.preprocessPackage: name(%s)" % name
-        return self._preprocessFile(path)
+        return self._preprocessFile(name, path)
 
 
-    def _preprocessFile(self, path):
+    def _preprocessFile(self, name, path):
         """
         """
 
+        #first, read source file in
         try:
-            rendered = Tpl( path )
+            file = open(path)
+            text = file.read()
         except:
-            return None
+            raise ImportError
         
+        #next, determine if we have a directive .pypp
+        # If we can't find one, we still have to return
+        # a valid file object to the caller.
+        if (text.find("#.pypp")==-1):
+            return file
         
+        print "pypp: found directive, name(%s)" % name
         
+        # if an error occurs, let it trickle up
+        # TODO is there a better to handle exceptions here??
+        rendered = Tpl(text).render()
+
+        processed_path = path + '.pypp'
+        
+        try:
+            file = open( processed_path, "w")
+            file.write(rendered)
+        except Exception,e:
+            raise RuntimeError("pypp: error writing rendered file, path(%s) exception(%s)" % (processed_path, e))
+        finally:
+            file.close()
+            
+        # lastly, re-open the file but this time in read-only mode
+        try:
+            file = open(processed_path)
+        except Exception,e:
+            raise RuntimeError("pypp: error opening rendered file, path(%s) exception(%s)" % (processed_path, e) )
+        
+        return file
 
     def processed(self):
         for i in self._processed:
