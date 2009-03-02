@@ -17,9 +17,13 @@ __all__ = []
 import sys
 from importer import *
 from controller import *
+from loader import *
 
 _controller = Controller()
-_importer = Importer()
+_importer   = Importer()
+
+# Hook-up a loader to the controller
+_controller._loader = Loader
 
 # I'd rather not have the Importer module handle the chain of events
 _importer.callback_import_module = _controller.handle_import_module
@@ -36,8 +40,11 @@ if __name__ == "__main__":
     import os.path
     import jld.cmd_g2.base_ui
 
-    for e in _controller.processed():
-        print e
+    #for e in _controller.processed():
+    #    print e
+
+    for m in sys.modules:
+        print "module: %s" % m 
 
     #for e in _importer.processed:
     #    print e
