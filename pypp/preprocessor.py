@@ -1,5 +1,7 @@
 #!/usr/bin/env python
-"""
+""" Preprocessor class
+    project: pypp
+    
     @author: Jean-Lou Dupont
 """
 __author__  = "Jean-Lou Dupont"
@@ -37,31 +39,9 @@ class Tpl(object):
             
     def render(self, **params):
         """ Performs the preprocessing.
-        
-            **Example**
-            
-            >>> f = os.path.dirname( __file__ ) + '/tests/test.tpl' 
-            >>> t = Tpl(f)
-            >>> t.render(var='variable')
-            'Test Template: variable'
-            >>> f2 = os.path.dirname( __file__ ) + '/tests/test2.tpl'
-            >>> t2 = Tpl(f2)
-            >>> t2.render()
-            'Simple template.'
-            
             @param params: the input parameters
             @return: rendered text            
         """
         lookup = TemplateLookup(directories = self.dirs) if self.dirs else None
         tpl = Template(text=self.input, lookup=lookup)
         return tpl.render(**params)
-            
-            
-# ==============================================
-# ==============================================
-
-if __name__ == "__main__":
-    """ Tests
-    """
-    import doctest
-    doctest.testmod()
