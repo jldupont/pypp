@@ -28,7 +28,6 @@ class Tpl(object):
             
             @param input: the input file (complete file path)
             @param dirs: the template directory list   
-            
         """
         self.input = input
         if dirs:
@@ -54,7 +53,7 @@ class Tpl(object):
             @return: rendered text            
         """
         lookup = TemplateLookup(directories = self.dirs) if self.dirs else None
-        tpl = Template(filename=self.input, lookup=lookup)
+        tpl = Template(text=self.input, lookup=lookup)
         return tpl.render(**params)
             
             

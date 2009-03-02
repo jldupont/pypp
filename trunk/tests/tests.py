@@ -17,6 +17,13 @@ oneup = os.path.dirname( here )
 thislib = os.path.join( oneup, 'pypp' )
 sys.path.append( thislib )
 
+
+# ==============================================
+import pypp
+
+import tester as tester
+print tester.result.__doc__
+
 # ==============================================
 # ==============================================
 
