@@ -13,10 +13,8 @@ import sys
 #  Add our library under test to the system path
 # ==============================================
 here  = os.path.dirname( os.path.abspath( __file__ ) )
-oneup = os.path.dirname( here )
-thislib = os.path.join( oneup, 'pypp' )
+thislib = os.path.dirname( here )
 sys.path.append( thislib )
-
 
 # ==============================================
 import pypp
@@ -32,6 +30,3 @@ if __name__ == "__main__":
     """
     #import doctest
     #doctest.testmod()
-    print here
-    print oneup
-    print thislib
