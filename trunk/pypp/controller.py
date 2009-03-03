@@ -18,7 +18,7 @@ from preprocessor import Tpl
 class Controller(object):
     """
     """
-    __slots__ = ['_processed', '_loader']
+    #__slots__ = ['_processed', '_loader']
     
     def __init__(self):
         
