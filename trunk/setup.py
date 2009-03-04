@@ -1,62 +1,49 @@
-""" EGG setup
-
-    @author: Jean-Lou Dupont
+""" pypp: python preprocessor based on the Mako template engine
 """
-_DEBUG = False
+__author__  = "Jean-Lou Dupont"
+__version__ = "0.0.1"
+__email__   = "python (at) jldupont.com"
+
+__desc__    = """
+Features
+========
+
+* Ease of use: just one import statement
+
+* Speed: once compilation is done, no runtime overhead
+
+* Based on the Mako template engine  
+"""
+
+__doc_url__ = """http://pypp.googlecode.com/"""
 
 import sys
 import os.path
 from setuptools import setup, find_packages
 
-_packages = ['jld',
-             'jld.api', 
-            'jld.backup', 
-            'jld.cmd', 
-            'jld.cmd_g2',
-            'jld.cmd_g2.transmission',
-            'jld.registry',
-            'jld.template',  
-            'jld.tools'
-            ]
+__classifiers = [
+    'Development Status :: 3 - Alpha',
+    'Intended Audience :: Developers',
+    'License :: Public Domain',
+    'Programming Language :: Python',
+    'Topic :: Software Development :: Libraries :: Python Modules',
+    'Operating System :: Microsoft :: Windows',
+    'Operating System :: POSIX',
+    ]
 
-_scripts = [ 
-            'jld/backup/scripts/mm.py',
-            'jld/backup/scripts/mm.bat', 
-            'jld/backup/scripts/mm',
-            
-            'jld/backup/scripts/dlc.py',
-            'jld/backup/scripts/dlc.bat', 
-            'jld/backup/scripts/dlc',
-            
-            'jld/backup/scripts/glf.py',
-            'jld/backup/scripts/glf.bat', 
-            'jld/backup/scripts/glf', 
-            
-            'jld/cmd/pypre.py',
-            
-            'jld/scripts/trns.py',            
-            ]
+__dependencies = ['mako',]
 
-if (not _DEBUG):
-    setup(
-        name = "jld",
-        description      = jld.__desc__,
-        author_email     = jld.__email__,
-        author           = jld.__author__,
-        url              = jld.__doc_url__,
-        long_description = jld.__long_desc__,
-        version          = jld.__version__,
-        package_data     = {'':['*.*']},
-        packages         = _packages,
-        scripts          = _scripts,
-        classifiers      = jld.__classifiers__,
-        install_requires = _dependencies,
-        zip_safe         = False,
-    )
-
-import shutil
-
-# Copy to tags directory
-if (not _DEBUG):
-    print 'copying to tags directory'
-    shutil.copy(source_egg_path, dest_egg_path)
+setup(
+    name = "pypp",
+    description      = __doc__,
+    author_email     = __email__,
+    author           = __author__,
+    url              = __doc_url__,
+    long_description = __desc__,
+    version          = __version__,
+    package_data     = {'':['*.*']},
+    packages         = find_packages(),
+    classifiers      = __classifiers,
+    install_requires = __dependencies,
+    zip_safe         = True,
+)
