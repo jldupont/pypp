@@ -21,12 +21,4 @@ import pypp
 
 import tester as tester
 print tester.result.__doc__
-
-# ==============================================
-# ==============================================
-
-if __name__ == "__main__":
-    """ Tests
-    """
-    #import doctest
-    #doctest.testmod()
+tester.some_function();
