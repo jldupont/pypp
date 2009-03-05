@@ -26,6 +26,12 @@ def stripLeadingHash(text):
     """
     return text.replace('#<%','<%').replace('#</%','</%')
  
+def stripLeadingHashFromVar(text):
+    """ Strips the leading # from variable references
+        i.e.  #${ 
+    """
+    return text.replace('#${', '${')
+ 
 class Tpl(object):
     """ Template based on the Mako engine
     """
@@ -47,5 +53,6 @@ class Tpl(object):
             @return: rendered text            
         """
         lookup = TemplateLookup(directories = self.dirs) if self.dirs else None
-        tpl = Template(text=self.input, lookup=lookup, cache_enabled=False, preprocessor=[stripLeadingHash,])
+        tpl = Template(text=self.input, lookup=lookup, 
+                       cache_enabled=False, preprocessor=[stripLeadingHash, stripLeadingHashFromVar])
         return tpl.render(**params)
