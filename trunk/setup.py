@@ -1,15 +1,21 @@
 """ pypp: python preprocessor based on the Mako template engine
 """
 __author__  = "Jean-Lou Dupont"
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 __email__   = "python (at) jldupont.com"
 
 __desc__    = """
-Benefit
-=======
+Benefits
+========
 
 The primary benefit of pypp is improved readability of source code.
 Furthermore, the template engine provides powerful macro functionality which helps save keystrokes whilst coding.  
+
+Drawbacks
+=========
+
+* Increases start-up time
+* Some template constructs confuse source code editor syntax highlight functionality 
 
 Features
 ========

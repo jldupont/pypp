@@ -19,6 +19,13 @@ except:
     print "pypp: Mako template package not found. Please install"
     sys.exit(1)
  
+ 
+def stripLeadingHash(text):
+    """ Strips the leading # from open & close Mako tags
+        i.e. #<%    #</%
+    """
+    return text.replace('#<%','<%').replace('#</%','</%')
+ 
 class Tpl(object):
     """ Template based on the Mako engine
     """
@@ -32,10 +39,7 @@ class Tpl(object):
             @param dirs: the template directory list   
         """
         self.input = input
-        if dirs:
-            self.dirs = dirs
-        else:
-            self.dirs = [ os.path.dirname( input ) ]
+        self.dirs = dirs
             
     def render(self, **params):
         """ Performs the preprocessing.
@@ -43,5 +47,5 @@ class Tpl(object):
             @return: rendered text            
         """
         lookup = TemplateLookup(directories = self.dirs) if self.dirs else None
-        tpl = Template(text=self.input, lookup=lookup, cache_enabled=False)
+        tpl = Template(text=self.input, lookup=lookup, cache_enabled=False, preprocessor=[stripLeadingHash,])
         return tpl.render(**params)

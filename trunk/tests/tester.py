@@ -14,3 +14,5 @@ def result():
     """
     ${var()}
     """
+
+#<%include file="include.py" />

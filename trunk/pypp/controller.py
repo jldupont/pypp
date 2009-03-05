@@ -89,7 +89,8 @@ class Controller(object):
         
         # if an error occurs, let it trickle up
         # TODO is there a better to handle exceptions here??
-        rendered = Tpl(text).render()
+        dir = os.path.dirname(path)
+        rendered = Tpl(text, dirs=dir).render()
 
         processed_path = path + '.pypp'
         
