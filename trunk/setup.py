@@ -5,6 +5,12 @@ __version__ = "0.0.1"
 __email__   = "python (at) jldupont.com"
 
 __desc__    = """
+Benefit
+=======
+
+The primary benefit of pypp is improved readability of source code.
+Furthermore, the template engine provides powerful macro functionality which helps save keystrokes whilst coding.  
+
 Features
 ========
 
@@ -12,7 +18,21 @@ Features
 
 * Speed: once compilation is done, no runtime overhead
 
-* Based on the Mako template engine  
+* Based on the Mako_ template engine
+
+Changelog
+---------
+
+**0.0.2**
+
+* disabled template caching: (1) pypp is not optimizing start-up time (2) runtime time resources are optimized
+
+**0.0.1** 
+
+Initial alpha release
+
+
+.. _Mako: http://www.makotemplates.org/
 """
 
 __doc_url__ = """http://pypp.googlecode.com/"""

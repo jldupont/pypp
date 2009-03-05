@@ -43,5 +43,5 @@ class Tpl(object):
             @return: rendered text            
         """
         lookup = TemplateLookup(directories = self.dirs) if self.dirs else None
-        tpl = Template(text=self.input, lookup=lookup)
+        tpl = Template(text=self.input, lookup=lookup, cache_enabled=False)
         return tpl.render(**params)
