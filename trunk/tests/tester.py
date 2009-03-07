@@ -20,5 +20,3 @@ def result():
 #<%def name="some_var()">print "This will appear at the beginning"</%def>
 
 #${some_var()}
-
-

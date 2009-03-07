@@ -16,7 +16,7 @@ import sys
 from preprocessor import Tpl
 
 class Controller(object):
-    """
+    """ Controller class
     """
     #__slots__ = ['_processed', '_loader']
     
@@ -27,14 +27,13 @@ class Controller(object):
         self._processed = {}
     
     def handle_import_module(self, name, rpath, path, file, desc, global_scope):
-        """
+        """ Callback for the PEP302 import_module function 
         """
         #paranoia
         if (name in self._processed):
             return None
         
         self._processed[name] = path
-        #print "handle_import_module: name(%s) rpath(%s)" % (name, rpath)
     
         #Perform the preprocessing
         if (file):
@@ -51,26 +50,31 @@ class Controller(object):
         return None
 
     def preprocessModule(self, name, file):
-        """
+        """ Preprocess a module
         """
         #get rid of originating file because
         # we will anyway generate a new one
         path = file.name
         file.close()
-        print "Controller.preprocessModule: name(%s)" % name
         return self._preprocessFile(name, path)
         
 
     def preprocessPackage(self, name, path):
+        """ Preprocess a package
         """
-        """
-        print "Controller.preprocessPackage: name(%s)" % name
         return self._preprocessFile(name, path)
 
 
     def _preprocessFile(self, name, path):
+        """ Preprocess a source file.
         """
-        """
+
+        #let's make sure we really need to process the file
+        processed_path = path + '.pypp'
+        
+        if (self._isFresh(path, processed_path)):
+            #print "fresh: name(%s)" % name
+            return self._returnFile( processed_path )
 
         #first, read source file in
         try:
@@ -84,16 +88,17 @@ class Controller(object):
         # a valid file object to the caller.
         if (text.find("#.pypp")==-1):
             return file
-        
-        print "pypp: found directive, name(%s)" % name
+
+        #we are finished with the source file
+        #because at this point we know we'll have to
+        #deal with a compiled template.
+        file.close()
         
         # if an error occurs, let it trickle up
         # TODO is there a better to handle exceptions here??
         dir = os.path.dirname(path)
         rendered = Tpl(text, dirs=dir).render()
 
-        processed_path = path + '.pypp'
-        
         try:
             file = open( processed_path, "w")
             file.write(rendered)
@@ -109,6 +114,30 @@ class Controller(object):
             raise RuntimeError("pypp: error opening rendered file, path(%s) exception(%s)" % (processed_path, e) )
         
         return file
+
+    def _returnFile(self, filepath):
+        """ Opens 
+        """
+        try:
+            file = open(filepath,"r")
+            return file
+        except:
+            raise ImportError
+
+    def _isFresh(self, source_filepath, compiled_filepath):
+        """ Verifies if the compiled source file is fresh.
+            If we have an error of any sort, assume we have
+            to process the file anyhow. This covers the cases:
+            - no processed file is available yet
+            - no processed file is available and there won't be any 
+        """
+        try:
+            s_mtime = os.path.getmtime(source_filepath)
+            c_mtime = os.path.getmtime(compiled_filepath)
+        except:
+            return False
+        
+        return (c_mtime > s_mtime)
 
     def _processed(self):
         """ for debugging purpose
