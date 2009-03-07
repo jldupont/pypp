@@ -80,9 +80,6 @@ class Importer(object):
         _ispkg = _isdir
         _ismod = _isfile
         
-        #result2 = (origName, _ispkg, _ismod, rpath)
-        #print "**result: name(%s) pkg(%s) mod(%s) path(%s)\n" % result2
-
         if (_ispkg):
             return self._handlePkg(origName, rpath, file, desc)
         
@@ -104,7 +101,6 @@ class Importer(object):
         
             path: filesystem path to the module (i.e. mod-name.py)
         """
-        #print "_handleMod: name(%s) path(%s)" % (name,path)
         frame = sys._getframe(1)
         global_scope = frame.f_globals
         

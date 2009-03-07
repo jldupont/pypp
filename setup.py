@@ -1,7 +1,7 @@
 """ pypp: python preprocessor based on the Mako template engine
 """
 __author__  = "Jean-Lou Dupont"
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 __email__   = "python (at) jldupont.com"
 
 __desc__    = """
@@ -28,6 +28,11 @@ Features
 
 Changelog
 ---------
+**0.0.3**
+
+* Added 'freshness' check in order to save recompiles
+* Removed debug print statements
+
 
 **0.0.2**
 
