@@ -11,20 +11,20 @@ Benefits
 The primary benefit of pypp is improved readability of source code.
 Furthermore, the template engine provides powerful macro functionality which helps save keystrokes whilst coding.  
 
+Features
+========
+
+* Ease of use: just one import statement
+* No additional file to declare nor any change in file extension required
+* Once compilation is done, no runtime overhead
+* Freshness check: compilation is only performed upon changes to source files
+* Based on the Mako_ template engine
+
 Drawbacks
 =========
 
 * Increases start-up time
 * Some template constructs confuse source code editor syntax highlight functionality 
-
-Features
-========
-
-* Ease of use: just one import statement
-
-* Speed: once compilation is done, no runtime overhead
-
-* Based on the Mako_ template engine
 
 Changelog
 ---------

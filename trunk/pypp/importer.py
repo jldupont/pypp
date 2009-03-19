@@ -77,6 +77,7 @@ class Importer(object):
         _isdir  = os.path.isdir(rpath)
         _isfile = os.path.isfile(rpath)
         
+        # readability...
         _ispkg = _isdir
         _ismod = _isfile
         

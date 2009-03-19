@@ -9,15 +9,11 @@ __version__ = "$Id$"
 
 __all__ = ['Tpl']
 
-import os
-import sys
-
 try:
     from mako.template import Template
     from mako.lookup import TemplateLookup
 except:
-    print "pypp: Mako template package not found. Please install"
-    sys.exit(1)
+    raise RuntimeError( "pypp: Mako template package not found. Please install" )
  
  
 def stripLeadingHash(text):
